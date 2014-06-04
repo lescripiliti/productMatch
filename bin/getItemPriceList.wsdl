@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<s0:definitions name="GetItemPriceListServiceDefinitions" targetNamespace="http://com/b2winc/product/pricing/webservice" xmlns="" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://com/b2winc/product/pricing/webservice" xmlns:s2="java:javax.xml.soap" xmlns:s3="http://schemas.xmlsoap.org/wsdl/soap/">
+  <s0:types>
+    <schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.b2winc.com/generalschema" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:gs="http://www.b2winc.com/generalschema" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://com/b2winc/product/pricing/webservice" xmlns:s2="java:javax.xml.soap" xmlns:s3="http://schemas.xmlsoap.org/wsdl/soap/">
+      <complexType name="error">
+        <sequence>
+          <element minOccurs="0" name="errorCode" type="int"/>
+          <element minOccurs="0" name="errorMessage" type="string"/>
+          <element minOccurs="0" name="exception" type="string"/>
+        </sequence>
+      </complexType>
+      <complexType name="response">
+        <sequence>
+          <element minOccurs="1" name="success" type="boolean"/>
+          <element minOccurs="0" name="errorCode" type="string"/>
+          <element minOccurs="0" name="errorMessage" type="string"/>
+        </sequence>
+      </complexType>
+    </schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.b2winc.com/getItemPriceList" xmlns:b2wg="http://www.b2winc.com/generalschema" xmlns:pref="http://www.b2winc.com/getItemPriceList" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://com/b2winc/product/pricing/webservice" xmlns:s2="java:javax.xml.soap" xmlns:s3="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://www.b2winc.com/generalschema"/>
+      <xs:element name="getItemPriceListRequest" type="pref:getItemPriceListRequest"/>
+      <xs:element name="getItemPriceListResponse" type="pref:getItemPriceListResponse"/>
+      <xs:complexType name="getItemPriceListRequest">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="1" name="itemId" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>id do item (produto)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getItemPriceListResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="priceInfo" type="pref:priceInfo">
+            <xs:annotation>
+              <xs:documentation>
+      			lista de informacoes de preco do item
+      		</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="1" minOccurs="0" name="response" type="b2wg:response"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="priceInfo">
+        <xs:sequence>
+          <xs:element name="itemId" type="xs:long"/>
+          <xs:element name="brandId">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="01"/>
+                <xs:enumeration value="02"/>
+                <xs:enumeration value="03"/>
+                <xs:enumeration value="04"/>
+                <xs:enumeration value="07"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" name="location" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Identificador do elemento da estrutura organizacional</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="currency" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Moeda utilizada nessa precificação</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="price">
+            <xs:annotation>
+              <xs:documentation>Informação do preço</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="default" type="xs:decimal">
+                  <xs:annotation>
+                    <xs:documentation>Preço DE</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="sale" type="xs:decimal">
+                  <xs:annotation>
+                    <xs:documentation>Preço POR</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="brandCard" type="xs:decimal">
+                  <xs:annotation>
+                    <xs:documentation>Preço especial para o cartão da marca</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="java:javax.xml.soap" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://com/b2winc/product/pricing/webservice" xmlns:s2="java:javax.xml.soap" xmlns:s3="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="SOAPException"/>
+      <xs:element name="SOAPException" type="java:SOAPException" xmlns:java="java:javax.xml.soap"/>
+    </xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://com/b2winc/product/pricing/webservice" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://com/b2winc/product/pricing/webservice" xmlns:s2="java:javax.xml.soap" xmlns:s3="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://www.b2winc.com/getItemPriceList"/>
+      <xs:element name="getItemPriceList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="getItemPriceListRequest" type="get:getItemPriceListRequest" xmlns:get="http://www.b2winc.com/getItemPriceList"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getItemPriceListResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="get:getItemPriceListResponse" xmlns:get="http://www.b2winc.com/getItemPriceList"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </s0:types>
+  <s0:message name="getItemPriceList">
+    <s0:part element="s1:getItemPriceList" name="parameters"/>
+  </s0:message>
+  <s0:message name="getItemPriceListResponse">
+    <s0:part element="s1:getItemPriceListResponse" name="parameters"/>
+  </s0:message>
+  <s0:message name="SOAPException">
+    <s0:part element="s2:SOAPException" name="SOAPException"/>
+  </s0:message>
+  <s0:portType name="GetItemPriceList">
+    <s0:operation name="getItemPriceList" parameterOrder="parameters">
+      <s0:input message="s1:getItemPriceList"/>
+      <s0:output message="s1:getItemPriceListResponse"/>
+      <s0:fault message="s1:SOAPException" name="SOAPException"/>
+    </s0:operation>
+  </s0:portType>
+  <s0:binding name="GetItemPriceListServiceSoapBinding" type="s1:GetItemPriceList">
+    <s3:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <s0:operation name="getItemPriceList">
+      <s3:operation soapAction="" style="document"/>
+      <s0:input>
+        <s3:body parts="parameters" use="literal"/>
+      </s0:input>
+      <s0:output>
+        <s3:body parts="parameters" use="literal"/>
+      </s0:output>
+      <s0:fault name="SOAPException">
+        <s3:fault name="SOAPException" use="literal"/>
+      </s0:fault>
+    </s0:operation>
+  </s0:binding>
+  <s0:service name="GetItemPriceListService">
+    <s0:port binding="s1:GetItemPriceListServiceSoapBinding" name="GetItemPriceListSoapPort">
+      <s3:address location="http://bus11g.b2w/PricingServices/Proxy_Services/getItemPriceList?WSDL"/>
+    </s0:port>
+  </s0:service>
+</s0:definitions>
