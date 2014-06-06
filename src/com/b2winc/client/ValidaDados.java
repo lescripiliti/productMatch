@@ -1,9 +1,6 @@
 package com.b2winc.client;
 
-import java.util.List;
-
 import com.b2winc.GetItemPriceList_GetItemPriceListSoapPort_Client;
-import com.b2winc.PriceInfo;
 import com.b2winc.query.item.GetBasicItemInfoWS_GetBasicItemInfoWSSoapPort_Client;
 
 public class ValidaDados {
