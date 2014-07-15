@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Fri Jul 11 17:26:26 BRT 2014
+onejar.license.required=false
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=tools-find.jar
+manifest.mergeall=true
+manifest.mainclass=com.b2winc.client.ConsultaItensTools
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=

@@ -16,7 +16,7 @@ import javax.xml.ws.Service;
  */
 @WebServiceClient(name = "GetBasicItemInfoWSService", 
                   //wsdlLocation = "http://10.13.225.18/soa-infra/services/item/getItemBob/getBasicItemInfo?WSDL",
-                  wsdlLocation = "/Users/leandroscripiliti/Documents/workspace/b2w-match/src/getBasicItemInfoMKT.wsdl",
+                  wsdlLocation = "C:\\Users\\leandro.felipe\\Documents\\GitHub\\productMatch\\src\\getBasicItemInfoMKT.wsdl",
                   targetNamespace = "http://br/com/b2winc/service") 
 public class GetBasicItemInfoWSService extends Service {
 

@@ -80,5 +80,26 @@ public final class GetBasicItemInfoWS_GetBasicItemInfoWSSoapPort_Client {
         return _getBasicItemInfo__return.getGetBasicItemInfoResponse().getItem().getSkuList().getSku().get(0).getNBMInfo().getNBM();
     	
     }
-
+    
+    private static String getItemMistoService(int id){
+    	
+    	GetBasicItemInfoWSService ss = new GetBasicItemInfoWSService(wsdlURL, SERVICE_NAME);
+        GetBasicItemInfoWS port = ss.getGetBasicItemInfoWSSoapPort();
+        GetBasicItemInfoRequest request = new GetBasicItemInfoRequest();  
+        request.setItemId(new Long(id));
+        
+        com.b2winc.query.item.GetBasicItemInfo _getBasicItemInfo_parameters = new GetBasicItemInfo();
+        _getBasicItemInfo_parameters.setGetBasicItemInfoRequest(request);
+        com.b2winc.query.item.GetBasicItemInfoResponse _getBasicItemInfo__return = port.getBasicItemInfo(_getBasicItemInfo_parameters);
+        return _getBasicItemInfo__return.getGetBasicItemInfoResponse().getItem().getSkuList().getSku().get(0).getSkuPropertyList().getSkuProperty().get(0).getSkuPropertyValue();
+    	
+    }
+    
+    public static boolean getItemMisto(int id){
+    	if(getItemMistoService(id).equalsIgnoreCase("1")) 
+    		return true;
+    	else
+    		return false;
+    }
+    
 }

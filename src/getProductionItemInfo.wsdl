@@ -1,0 +1,1977 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WL5G3N0:definitions name="ToolsWsServiceDefinitions" targetNamespace="http://com/b2w/tools/ws" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://com/b2w/tools/ws" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xs:schema targetNamespace="http://www.b2winc.com/tools/getProductIds" xmlns="http://www.b2winc.com/tools/getProductIds" xmlns:b2wc="http://www.b2winc.com/customer" xmlns:b2wg="http://www.b2winc.com/generalschema" xmlns:b2wi="http://www.b2winc.com/item" xmlns:b2wo="http://www.b2winc.com/order" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://com/b2w/tools/ws" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="getProductIdsRequest" type="getProductIdsRequest">
+        <xs:annotation>
+          <xs:documentation>ID - ? busca por Ids de produto</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="getProductIdsResponse" type="getProductIdsResponse"/>
+      <xs:complexType name="getProductIdsRequest">
+        <xs:sequence>
+          <xs:element maxOccurs="1" minOccurs="0" name="itemId" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>id do item inicial. Caso nulo sera enviado a partir do ID menor</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element maxOccurs="1" minOccurs="1" name="offset" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>quantidade de produtos</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getProductIdsResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="itemId" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>Id do produto
+			</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.b2winc.com/item" xmlns="http://www.b2winc.com/item" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://com/b2w/tools/ws" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="item">
+        <xs:sequence>
+          <xs:element name="itemId" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Identificador do item</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="legacyItemIdList">
+            <xs:annotation>
+              <xs:documentation>Informações do item nos legados</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="legacyItemIdData">
+                  <xs:annotation>
+                    <xs:documentation>Dados de item no legado</xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="legacyItemId" type="xs:string">
+                        <xs:annotation>
+                          <xs:documentation>Identificador do item nos sistemas legados</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="brandid" type="brandId">
+                        <xs:annotation>
+                          <xs:documentation>Identificador de marca (00=B2W, 01=SHOP, 02=ACOM, 03=SUBA, 04=BLOC)</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="supplierItemName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Nome do item dado pelo fornecedor</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="giftWrapIndicator" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Indicativo se o item pode ser embalado para presente</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="exclusivityConstraintList">
+            <xs:annotation>
+              <xs:documentation>Lista de marcas+location com exclusividade de venda</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="exclusivityConstraint" type="exclusivityConstraint"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="expirationInfo" type="expirationInfo">
+            <xs:annotation>
+              <xs:documentation>Informações sobre data de validade</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="merchandiseHierarchy" type="merchandiseHierarchy">
+            <xs:annotation>
+              <xs:documentation>Estrutura mercadológica principal do item</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="sellingTitleList">
+            <xs:annotation>
+              <xs:documentation>Lista de títulos de venda por marca</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="l10nSellingTitleInfo" type="sellingTitleInfo">
+                  <xs:annotation>
+                    <xs:documentation>Título por marca e idioma</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="descriptionList">
+            <xs:annotation>
+              <xs:documentation>Lista de descrição por marca e idioma</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="l10nDescriptionInfo" type="descriptionInfo">
+                  <xs:annotation>
+                    <xs:documentation>descricao por marca</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="itemProductionData" type="itemProductionInfo">
+            <xs:annotation>
+              <xs:documentation>informações relativas a produção de produto</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="siteDataInfo">
+            <xs:annotation>
+              <xs:documentation>Dados geridos pela administração de vitrines</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="siteInfo" type="siteInfo"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="priceList">
+            <xs:annotation>
+              <xs:documentation>Lista de informação de precificação do item</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="priceInfo" type="priceInfo">
+                  <xs:annotation>
+                    <xs:documentation>Informações sobre preço do item</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="skuList">
+            <xs:annotation>
+              <xs:documentation>Lista de SKU do item</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="sku" type="sku">
+                  <xs:annotation>
+                    <xs:documentation>SKU</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="itemPropertyList">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="itemProperty">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="itemPropertyId" type="xs:string"/>
+                      <xs:element name="itemPropertyValue" type="xs:string"/>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="saleRanking" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>Indicador relativo do ranking de vendas do produto</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="sellingRank" type="sellingRankList">
+            <xs:annotation>
+              <xs:documentation>Rank de vendas</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="stallment" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Parcelamento</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="expirationInfo">
+        <xs:sequence>
+          <xs:element name="isPerishable" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Indicativo se o produto é perecível</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="receivementDaysBeforeExpiration" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>
+						Número mínimo de dias até o prazo de validade
+						para permitir recebimento do produto no CD
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="shipmentDaysBeforeExpiration" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>
+						Número mínimo de dias até o prazo de validade
+						para permitir envio do produto para o cliente
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="exclusivityConstraint">
+        <xs:sequence>
+          <xs:element name="brandId">
+            <xs:annotation>
+              <xs:documentation>Marca (SHOP=01, ACOM=02, SUBA=03, BLOC=04)</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="brandId">
+                <xs:enumeration value="01"/>
+                <xs:enumeration value="02"/>
+                <xs:enumeration value="03"/>
+                <xs:enumeration value="04"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="location" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Identificador do elemento da estrutura organizacional</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="levels">
+        <xs:sequence>
+          <xs:element name="level1" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>Departamento</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="level2" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>Linha</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="level3" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>Classe</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="level4" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>Subclasse</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="level5" type="xs:integer"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="merchandiseHierarchy">
+        <xs:sequence>
+          <xs:element name="main" type="levels">
+            <xs:annotation>
+              <xs:documentation>Estrutura mercadológica principal</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="secondaryList">
+            <xs:annotation>
+              <xs:documentation>Lista de estruturas mercadológicas secundárias</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="secondary" type="levels"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sellingTitleInfo">
+        <xs:sequence>
+          <xs:element name="l10nId" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>ID da localidade (Ex: pt_BR, en_US, etc.)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="brandId">
+            <xs:annotation>
+              <xs:documentation>Marca (SHOP=01, ACOM=02, SUBA=03, BLOC=04)</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="brandId">
+                <xs:enumeration value="01"/>
+                <xs:enumeration value="02"/>
+                <xs:enumeration value="03"/>
+                <xs:enumeration value="04"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="sellingTitle" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Título de venda</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="l10nItemProductionInfo">
+        <xs:sequence>
+          <xs:element name="l10nId" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>ID da localidade (Ex: pt_BR, en_US, etc.)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="groupList">
+            <xs:annotation>
+              <xs:documentation>Lista de grupos de informação de produção de produto</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="groupInfo">
+                  <xs:annotation>
+                    <xs:documentation>Informações do grupo</xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="groupId" type="xs:integer">
+                        <xs:annotation>
+                          <xs:documentation>Identificador do grupo de informações</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="groupName" type="xs:string">
+                        <xs:annotation>
+                          <xs:documentation>Nome do grupo de informações</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="propertyList">
+                        <xs:annotation>
+                          <xs:documentation>Lista de propriedades desse grupo de informações</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="property" type="propertyType">
+                              <xs:annotation>
+                                <xs:documentation>Propriedade</xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="mediaInfo">
+        <xs:sequence>
+          <xs:element name="type">
+            <xs:annotation>
+              <xs:documentation>Tipo da mídia</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="CD"/>
+                <xs:enumeration value="DVD"/>
+                <xs:enumeration value="LIVRO"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="propertyList">
+            <xs:annotation>
+              <xs:documentation>Lista de propriedades desse grupo de informações</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="l10nPropertyInfo">
+                  <xs:annotation>
+                    <xs:documentation>propriedade localizada</xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="l10nId" type="xs:string">
+                        <xs:annotation>
+                          <xs:documentation>ID da localidade (Ex: pt_BR, en_US, etc.)</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="property" type="propertyType">
+                        <xs:annotation>
+                          <xs:documentation>Propriedade</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="artistList">
+            <xs:annotation>
+              <xs:documentation>
+						Lista de artistas
+					</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="artistInfo" type="artistInfo">
+                  <xs:annotation>
+                    <xs:documentation>
+									Artista
+								</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="trackList">
+            <xs:annotation>
+              <xs:documentation>Lista de faixas</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="trackInfo">
+                  <xs:annotation>
+                    <xs:documentation>informação de faixas</xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="propertyList">
+                        <xs:annotation>
+                          <xs:documentation>Lista de propriedades desse grupo de informações</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="l10nPropertyInfo">
+                              <xs:annotation>
+                                <xs:documentation>propriedade localizada</xs:documentation>
+                              </xs:annotation>
+                              <xs:complexType>
+                                <xs:sequence>
+                                  <xs:element name="l10nId" type="xs:string">
+                                    <xs:annotation>
+                                      <xs:documentation>ID da localidade (Ex: pt_BR, en_US, etc.)</xs:documentation>
+                                    </xs:annotation>
+                                  </xs:element>
+                                  <xs:element name="property" type="propertyType">
+                                    <xs:annotation>
+                                      <xs:documentation>Propriedade</xs:documentation>
+                                    </xs:annotation>
+                                  </xs:element>
+                                </xs:sequence>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element minOccurs="0" name="artistList">
+                        <xs:annotation>
+                          <xs:documentation>
+												Lista de artistas
+											</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="artistInfo" type="artistInfo">
+                              <xs:annotation>
+                                <xs:documentation>
+															Artista
+														</xs:documentation>
+                              </xs:annotation>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="imageInfo">
+        <xs:sequence>
+          <xs:element name="brandId">
+            <xs:annotation>
+              <xs:documentation>Marca (SHOP=01, ACOM=02, SUBA=03, BLOC=04)</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="brandId">
+                <xs:enumeration value="01"/>
+                <xs:enumeration value="02"/>
+                <xs:enumeration value="03"/>
+                <xs:enumeration value="04"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" name="skuId" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Codigo do SKU. Quando vazio a imagem se refere ao Item</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="type" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Tipo de imagem para identificar por exemplo o tamanho</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="fileName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Nome do Arquivo</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="location" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Loja aonde a imagem irá aparecer</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="itemProductionInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="l10nItemBrandProductionList">
+            <xs:annotation>
+              <xs:documentation>Dados por localidade e marca</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="l10nItemBrandProductionInfo" type="l10nItemBrandProductionInfo">
+                  <xs:annotation>
+                    <xs:documentation>Informações de produção para uma determinada localidade e marca</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="l10nItemProductionList">
+            <xs:annotation>
+              <xs:documentation>Dados por localidade</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="l10nItemProductionInfo" type="l10nItemProductionInfo">
+                  <xs:annotation>
+                    <xs:documentation>Informações de produção para uma determinada localidade</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="mediaList">
+            <xs:annotation>
+              <xs:documentation>Lista de mídias, no caso de CD, DVD, Livros e box compostos</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="mediaInfo" type="mediaInfo">
+                  <xs:annotation>
+                    <xs:documentation>Informações da mídia</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="imageList">
+            <xs:annotation>
+              <xs:documentation>Lista de imagens do item</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="imageInfo" type="imageInfo">
+                  <xs:annotation>
+                    <xs:documentation>Informações da imagem</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TAG">
+        <xs:sequence>
+          <xs:element name="type" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Tipo da tag</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="name" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Nome da TAG</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="label" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Rotulo da TAG</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="initValidDate" type="xs:date">
+            <xs:annotation>
+              <xs:documentation>Data inicial de validade da tag</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="finalValidDate" type="xs:date">
+            <xs:annotation>
+              <xs:documentation>Data final de validade da tag</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="siteInfo">
+        <xs:sequence>
+          <xs:element name="brandId" type="brandId">
+            <xs:annotation>
+              <xs:documentation>Marca (SHOP=01, ACOM=02, SUBA=03, BLOC=04)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="siteMerchandiseHierarchy" type="SiteMerchandiseHierarchy">
+            <xs:annotation>
+              <xs:documentation>
+				Estrutura mercadológica do site
+			</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="specialUrl" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>URL especial do produto. Equivalente a redirect de produto na ACOM</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="sellingTitle" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Título do item com apelo de venda</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="specialPageSWF" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>URL do flash em página especial de produto</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="seeMoreInfo" type="seeMoreInfo">
+            <xs:annotation>
+              <xs:documentation>Dados do link de veja mais</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="TAGList">
+            <xs:annotation>
+              <xs:documentation>Lista de TAGs</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="TAG" type="TAG">
+                  <xs:annotation>
+                    <xs:documentation>Informações de TAG</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="ratingInfoList">
+            <xs:annotation>
+              <xs:documentation>Lista de informações de rating do produto</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="ratingInfo" type="ratingInfo">
+                  <xs:annotation>
+                    <xs:documentation>Informações de rating do produto</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="releaseInfo" type="releaseInfo">
+            <xs:annotation>
+              <xs:documentation>Inforamações sobre lançamento do produto</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="comercialStatus" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>
+						Status comercial
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="acessoryList">
+            <xs:annotation>
+              <xs:documentation>Lista de itens que devem ser oferecidos como acessório</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="itemId" type="xs:string">
+                  <xs:annotation>
+                    <xs:documentation>ID do item que é acessório</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="crossSellingList">
+            <xs:annotation>
+              <xs:documentation>Lista de itens que devem ser oferecidos como cross-selling</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="itemId" type="xs:string">
+                  <xs:annotation>
+                    <xs:documentation>ID do item de cross-selling</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="priceInfo">
+        <xs:sequence>
+          <xs:element name="brandId">
+            <xs:annotation>
+              <xs:documentation>Marca (SHOP=01, ACOM=02, SUBA=03, BLOC=04)</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="brandId">
+                <xs:enumeration value="01"/>
+                <xs:enumeration value="02"/>
+                <xs:enumeration value="03"/>
+                <xs:enumeration value="04"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element minOccurs="0" name="b2bContractId" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>ID do contrato B2B</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="location" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Identificador do elemento da estrutura organizacional</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="currency" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Moeda utilizada nessa precificação</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="price">
+            <xs:annotation>
+              <xs:documentation>Informação do preço</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="default" type="xs:decimal">
+                  <xs:annotation>
+                    <xs:documentation>Preço DE</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="sale" type="xs:decimal">
+                  <xs:annotation>
+                    <xs:documentation>Preço POR</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="brandCard" type="xs:decimal">
+                  <xs:annotation>
+                    <xs:documentation>Preço especial para o cartão da marca</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="minimum" type="xs:decimal">
+                  <xs:annotation>
+                    <xs:documentation>Preço mínimo calculado através da margem mínima pelo Pricing</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="maximum" type="xs:decimal">
+                  <xs:annotation>
+                    <xs:documentation>Preço máximo calculado através da margem máxima pelo Pricing</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="suggested" type="xs:decimal">
+                  <xs:annotation>
+                    <xs:documentation>Preço Sugerido calculado pelo ORMS</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="pointPrice" type="pointPriceInfo"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="pointPriceInfo">
+        <xs:sequence>
+          <xs:element name="ruleId" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>ID da regra que concedeu o preço</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ruleCreationUser" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Usuário que cadastrou a regra</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ruleCreationDate" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Data de criação da regra</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ruleAppliedFor">
+            <xs:annotation>
+              <xs:documentation>Fator aplicado a: (01=Produto, 02=Setor, 03=Departamento, 04=Faixa de preço, 05=Location).  06=fator fixo</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="01"/>
+                <xs:enumeration value="02"/>
+                <xs:enumeration value="03"/>
+                <xs:enumeration value="04"/>
+                <xs:enumeration value="05"/>
+                <xs:enumeration value="06"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="pointPrice" type="xs:double">
+            <xs:annotation>
+              <xs:documentation>Valor lúdico</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="pointPriceFormatted" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Valor lúdico em string</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="conversionFactor" type="xs:double">
+            <xs:annotation>
+              <xs:documentation>Fator de conversão aplicado ao preço sale.  Caso não exista, indica fator fixo </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sku">
+        <xs:sequence>
+          <xs:element name="skuId" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>ID do SKU</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="legacySkuIdList">
+            <xs:annotation>
+              <xs:documentation>Lista de IDs ddo SKU nos legados</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="legacySkuIdData">
+                  <xs:annotation>
+                    <xs:documentation>Dados de sku no legado</xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="legacySkuId" type="xs:string">
+                        <xs:annotation>
+                          <xs:documentation>Identificador do SKU nos sistemas legados</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="brandId" type="brandId">
+                        <xs:annotation>
+                          <xs:documentation>Identificador de marca (00=B2W, 01=SHOP, 02=ACOM, 03=SUBA, 04=BLOC)</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="replanishmentList">
+            <xs:annotation>
+              <xs:documentation>Lista de informações de reposição de grade</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="replanishment" type="replanishment">
+                  <xs:annotation>
+                    <xs:documentation>Informações de reposição de grade</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="EANList">
+            <xs:annotation>
+              <xs:documentation>Lista de números de código de barra</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="EAN" type="xs:string">
+                  <xs:annotation>
+                    <xs:documentation>Código de barra</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="NBMInfo" type="NBMInfo">
+            <xs:annotation>
+              <xs:documentation>Informação sobre classificação fiscal</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="taxInfo" type="taxInfo">
+            <xs:annotation>
+              <xs:documentation>Informações fiscais</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="manufacturerInfo">
+            <xs:annotation>
+              <xs:documentation>Informações de fabricante</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" name="manufacturerWarranty" type="xs:integer">
+                  <xs:annotation>
+                    <xs:documentation>Prazo de garantia do fabricante, em meses</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="skuManufacturer" type="xs:string">
+                  <xs:annotation>
+                    <xs:documentation>Fabricante do produto</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="supplierInfo" type="supplierInfo">
+            <xs:annotation>
+              <xs:documentation>Informações específicas de fornecedor</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="diffList">
+            <xs:annotation>
+              <xs:documentation>Lista de diferenciadores</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="4" name="diff" type="diff">
+                  <xs:annotation>
+                    <xs:documentation>Diferenciador</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="kitInfo" type="kitInfo">
+            <xs:annotation>
+              <xs:documentation>Informações de kit, caso o SKU for um</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="dimensionInfo" type="dimensionInfo">
+            <xs:annotation>
+              <xs:documentation>Informações sobre dimensões do produto</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="isXDocking" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Indica se o SKU é cross docking</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="sellableFlagList">
+            <xs:annotation>
+              <xs:documentation>Lista de flags por marca indicando se o produto é vendável</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="sellableFlag" type="sellableFlag">
+                  <xs:annotation>
+                    <xs:documentation>Flag indicando se o produto é vendável por marca</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="isConsigned" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Indica se o produto tem venda consignada</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="isRentable" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Flag indicando se o produto é locável</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="saleClassification">
+            <xs:annotation>
+              <xs:documentation>Classificação de venda do produto</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="A"/>
+                <xs:enumeration value="B"/>
+                <xs:enumeration value="C"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="soldSeparatelly" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Flag indicando se o produto pode ser vendido separadamente</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="costPrice" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Preço de custo do SKU</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="skuBrand" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Marca do produto</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ISBN" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Número do ISBN caso o SKU seja um livro</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="isService" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Flag indicando se é um serviço e não um produto físico</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="serviceMediaSkuId" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>SKU de referência (mídia) quando for um serviço</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="skuPropertyList">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="skuProperty">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="skuPropertyId" type="xs:string"/>
+                      <xs:element name="skuPropertyValue" type="xs:string"/>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="skuDescription" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>descricao do SKU</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element default="false" name="isFunKitchen" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Indica se o item é fun kitchen</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="extendedWarrantyPeriod" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Caso preenchido, indica que o SKU é um item de Garantia Extendida.
+
+Ex: extendedWarrantyPeriod = 2, indica que esse SKU é um SKU de Garantia Extendida de 2 Anos.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="embeddedList">
+            <xs:annotation>
+              <xs:documentation>Lista de SKUs Embutidos</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="embeddedSKUList" type="embeddedSku">
+                  <xs:annotation>
+                    <xs:documentation>Lista de SKUs Embutidos</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="replanishment">
+        <xs:sequence>
+          <xs:element name="warehouseId" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Identificador do CD</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="quantity" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>Quantidade de itens na recompra</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="NBMInfo">
+        <xs:sequence>
+          <xs:element name="NBM" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Número do NBM</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="NBMSequence" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Sequencial do NBM</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="taxInfo">
+        <xs:sequence>
+          <xs:element name="origin">
+            <xs:annotation>
+              <xs:documentation>Domínio de informação indicando se o produto é importado</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="IMPORTADO"/>
+                <xs:enumeration value="NACIONAL_FAB_NACIONAL"/>
+                <xs:enumeration value="NACIONAL_FAB_ESTR"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="cst" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>Código de substituição tributária</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="supplierInfo">
+        <xs:sequence>
+          <xs:element name="supplierDocument" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>CNPJ do fornecedor</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="supplierSkuId" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>ID do produto no fornecedor</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="supplierOrderMultiple" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>Quantidade de itens em uma compra de um determinado fornecedor</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="minimumPurchaseQt" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>Quantidade mínima de compra. Limitação imposta pelo fornecedor</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="diff">
+        <xs:sequence>
+          <xs:element name="type" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Tipo do diferenciador (Voltagem, cor, tamanho, etc.)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="value" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Valor do diferenciador</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="kitInfo">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="skuKit">
+            <xs:annotation>
+              <xs:documentation>SKU que compõe o kit</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="skuId" type="xs:string">
+                  <xs:annotation>
+                    <xs:documentation>SKU que compõe o kit</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="quantity" type="xs:long">
+                  <xs:annotation>
+                    <xs:documentation>Quantidade de SKU nesse kit</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="percent" type="xs:decimal">
+                  <xs:annotation>
+                    <xs:documentation>Percentual na composição do kit</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" name="skuReference" type="xs:string">
+                  <xs:annotation>
+                    <xs:documentation>SKU de referência caso necessário (por exemplo, se for garantia de outro sku do kit)</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="dimensionInfo">
+        <xs:sequence>
+          <xs:element name="width" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Largura em cm</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="height" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Altura em cm</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="length" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Profundidade em cm</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="weight" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Peso em gramas</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="fatorCubagem" type="xs:decimal">
+            <xs:annotation>
+              <xs:documentation>Fator de cubagem</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sellableFlag">
+        <xs:sequence>
+          <xs:element name="brandId">
+            <xs:annotation>
+              <xs:documentation>Marca (SHOP=01, ACOM=02, SUBA=03, BLOC=04)</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="brandId">
+                <xs:enumeration value="01"/>
+                <xs:enumeration value="02"/>
+                <xs:enumeration value="03"/>
+                <xs:enumeration value="04"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="isSellable" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Flag indicando se é vendável incodincionalmente</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="isEligible" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Indica se o produto está elegível para venda. </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="location" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Indicador de loja.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="releaseInfo">
+        <xs:sequence>
+          <xs:element name="releaseDate" type="xs:dateTime">
+            <xs:annotation>
+              <xs:documentation>Data de lançamento do produto</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="daysInReleaseState" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Número de dias que ele deve ser mostrado como lançamento no site</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="seeMoreInfo">
+        <xs:sequence>
+          <xs:element name="seeMoreText" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Texto do Veja Mais </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="seeMoreURL" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>URL do veja mais</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ratingInfo">
+        <xs:sequence>
+          <xs:element name="rating" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>Nota de 0 a 10</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="title" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Título</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="comment" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Comentário feito pelo cliente</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="customerName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Nome do cliente</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="customerEmail" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Email do cliente</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="emailVisibility" type="xs:boolean">
+            <xs:annotation>
+              <xs:documentation>Flag indicando se o usuário autoriza o email aparecer no site</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="city" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Cidade</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="state" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Estado</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="UDA">
+        <xs:sequence maxOccurs="unbounded" minOccurs="0">
+          <xs:element name="id" type="xs:long"/>
+          <xs:element name="type" type="xs:string"/>
+          <xs:element name="value" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="l10nItemBrandProductionInfo">
+        <xs:sequence>
+          <xs:element name="l10nId" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>ID da localidade (Ex: pt_BR, en_US, etc.)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="brandId">
+            <xs:annotation>
+              <xs:documentation>Marca (SHOP=01, ACOM=02, SUBA=03, BLOC=04)</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="brandId">
+                <xs:enumeration value="01"/>
+                <xs:enumeration value="02"/>
+                <xs:enumeration value="03"/>
+                <xs:enumeration value="04"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="propertyList">
+            <xs:annotation>
+              <xs:documentation>Lista de propriedades por locale e marca (estas propriedades fazem parte de todos produtos e kits)</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="property" type="propertyType">
+                  <xs:annotation>
+                    <xs:documentation>Propriedade</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="propertyType">
+        <xs:sequence>
+          <xs:element name="sequence" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>Identificador de renderização no catálogo</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="propertyName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Nome da propriedade</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="valueList">
+            <xs:annotation>
+              <xs:documentation>Lista de valores da propriedade</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="value" type="xs:string">
+                  <xs:annotation>
+                    <xs:documentation>Valor</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="descriptionInfo">
+        <xs:sequence>
+          <xs:element name="l10nId" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>ID da localidade (Ex: pt_BR, en_US, etc.)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="brandId">
+            <xs:annotation>
+              <xs:documentation>Marca (SHOP=01, ACOM=02, SUBA=03, BLOC=04)</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="brandId">
+                <xs:enumeration value="01"/>
+                <xs:enumeration value="02"/>
+                <xs:enumeration value="03"/>
+                <xs:enumeration value="04"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="description" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>descricao do produto</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="artistInfo">
+        <xs:sequence>
+          <xs:element name="artistId" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>
+						ID do artista
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="name" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+						Nome do artista
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="position" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+						Posição do artista na
+						midia (cantor, baixista,
+						baterista, etc.)
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sellingRankList">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="sellingRank" type="sellingRank"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sellingRank">
+        <xs:sequence>
+          <xs:element name="brandId" type="brandId"/>
+          <xs:element name="rank" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="brandId">
+        <xs:annotation>
+          <xs:documentation>
+				Marca (SHOP=01, ACOM=02, SUBA=03, BLOC=04)
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="01"/>
+          <xs:enumeration value="02"/>
+          <xs:enumeration value="03"/>
+          <xs:enumeration value="04"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="SiteMerchandiseHierarchy">
+        <xs:sequence>
+          <xs:element name="main" type="levelsSite"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="secondary" type="levelsSite"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="levelsSite">
+        <xs:sequence>
+          <xs:element name="level1" type="levelSite">
+            <xs:annotation>
+              <xs:documentation>Departamento</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="level2" type="levelSite">
+            <xs:annotation>
+              <xs:documentation>Linha</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="level3" type="levelSite">
+            <xs:annotation>
+              <xs:documentation>Classe</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="level4" type="levelSite">
+            <xs:annotation>
+              <xs:documentation>Subclasse</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="level5" type="levelSite">
+            <xs:annotation>
+              <xs:documentation>Auxiliar</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="levelSite">
+        <xs:sequence>
+          <xs:element name="id" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>
+						Id do Departamento
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="name" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+						Nome do departamento
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="item" type="item"/>
+      <xs:complexType name="embeddedSku">
+        <xs:annotation>
+          <xs:documentation>SKU de Itens Embutidos.
+Ex: CD Antivirus + Licenca</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="embeddedSku" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>SKU do embutido</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="embeddesQty" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>quantidade do embutido
+</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:attribute fixed="1.1" name="version" type="xs:float"/>
+    </xs:schema>
+    <xs:schema targetNamespace="http://www.b2winc.com/tools/getproductionitemInfo" xmlns="http://www.b2winc.com/tools/getproductionitemInfo" xmlns:b2wc="http://www.b2winc.com/customer" xmlns:b2wg="http://www.b2winc.com/generalschema" xmlns:b2wi="http://www.b2winc.com/item" xmlns:b2wo="http://www.b2winc.com/order" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://com/b2w/tools/ws" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://www.b2winc.com/item"/>
+      <xs:element name="getProductionItemInfoRequest" type="getProductionItemInfoRequest">
+        <xs:annotation>
+          <xs:documentation>ID - 53 Consulta de dados de produção de item </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:complexType name="getProductionItemInfoRequest">
+        <xs:sequence>
+          <xs:element maxOccurs="1" minOccurs="0" name="itemId" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>id do item</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="getProductionItemInfoResponse" type="getProductionItemInfoResponse"/>
+      <xs:complexType name="getProductionItemInfoResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="1" minOccurs="0" name="item" type="b2wi:item">
+            <xs:annotation>
+              <xs:documentation>item com dados de producao.
+			SOMENTE:
+			- b2wi:itemProductionData
+			- b2wi:sellingTitleList 
+			- b2wi:descriptionList 
+			</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://www.b2winc.com/ItemPerson" xmlns:b2wite="http://www.b2winc.com/ItemPerson" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://com/b2w/tools/ws" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="ItemPerson" type="b2wite:ItemPerson"/>
+      <xs:complexType name="ItemPerson">
+        <xs:annotation>
+          <xs:documentation>
+				pessoa do produto (artista, autor, cantor)
+			</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="id" type="xs:int">
+            <xs:annotation>
+              <xs:documentation>codigo</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="name" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>nome</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="imgUrl" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>foto disponivel</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="biography" type="b2wite:l10nBiography">
+            <xs:annotation>
+              <xs:documentation>biografia</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="items" type="b2wite:ItemList">
+            <xs:annotation>
+              <xs:documentation>
+						items de autoria da pessoa
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="participationList">
+            <xs:annotation>
+              <xs:documentation>
+						Lista de participações
+					</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="mediaParticipation" type="b2wite:mediaParticipationType">
+                  <xs:annotation>
+                    <xs:documentation>
+									Participação por tipo de mídia
+								</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" name="genres" type="b2wite:GenreList">
+            <xs:annotation>
+              <xs:documentation>
+						generos do artista
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ItemList">
+        <xs:annotation>
+          <xs:documentation>
+				Lista de livros, cds ou dvds
+			</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="item">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="itemId" type="xs:long">
+                  <xs:annotation>
+                    <xs:documentation>
+									id do item
+								</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+                <xs:element name="type" type="b2wite:itemType">
+                  <xs:annotation>
+                    <xs:documentation>
+									itens com autor pode ser CD, DVD ou
+									LIVRO
+								</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="itemType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="CD"/>
+          <xs:enumeration value="DVD"/>
+          <xs:enumeration value="BOOK"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="GenreList">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="genre" type="b2wite:Genre">
+            <xs:annotation>
+              <xs:documentation>Gênero</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Genre">
+        <xs:annotation>
+          <xs:documentation>genero do artista</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="id" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>codigo</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="name" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>nome</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="type" type="b2wite:itemType">
+            <xs:annotation>
+              <xs:documentation>tipo do genero</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="url" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+						url para os produtos do genero
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="mediaParticipationType">
+        <xs:sequence>
+          <xs:element name="type" type="b2wite:itemType">
+            <xs:annotation>
+              <xs:documentation>
+						Tipo de mídia (CD, DVD, BOOK)
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="roles">
+            <xs:annotation>
+              <xs:documentation>
+						Papéis do artista
+					</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="role" type="b2wite:roleType">
+                  <xs:annotation>
+                    <xs:documentation>
+									Papel
+								</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="roleType">
+        <xs:sequence>
+          <xs:element name="roleName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Nome do papel</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="participations">
+            <xs:annotation>
+              <xs:documentation>
+						Lista de participações
+					</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="participation" type="b2wite:participationType">
+                  <xs:annotation>
+                    <xs:documentation>
+									Participação
+								</xs:documentation>
+                  </xs:annotation>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="participationType">
+        <xs:sequence>
+          <xs:element name="itemId" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>ID do item</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="itemName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Nome do item</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="itemAuthor" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Autor do item</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="trackName" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+						Nome da faixa, aplicável somente se for CD ou
+						DVD
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="l10nBiography">
+        <xs:sequence>
+          <xs:element maxOccurs="1" minOccurs="1" name="l10nId" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>ID da localidade (Ex: pt_BR, en_US, etc.)</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="biography" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>biografia</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema targetNamespace="http://www.b2winc.com/tools/getartistinfo" xmlns="http://www.b2winc.com/tools/getartistinfo" xmlns:b2wc="http://www.b2winc.com/customer" xmlns:b2wg="http://www.b2winc.com/generalschema" xmlns:b2wi="http://www.b2winc.com/item" xmlns:b2wite="http://www.b2winc.com/ItemPerson" xmlns:b2wo="http://www.b2winc.com/order" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://com/b2w/tools/ws" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://www.b2winc.com/ItemPerson"/>
+      <xs:element name="getArtistInfoRequest" type="getArtistInfoRequest">
+        <xs:annotation>
+          <xs:documentation>ID - # Consulta de dados de um artista </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:complexType name="getArtistInfoRequest">
+        <xs:sequence>
+          <xs:element maxOccurs="1" minOccurs="0" name="artistId" type="xs:long">
+            <xs:annotation>
+              <xs:documentation>id do artista</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="getArtistInfoResponse" type="getArtistInfoResponse"/>
+      <xs:complexType name="getArtistInfoResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="1" minOccurs="0" name="item" type="b2wite:ItemPerson">
+            <xs:annotation>
+              <xs:documentation>dados do artista
+			</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://com/b2w/tools/ws" xmlns:s0="http://schemas.xmlsoap.org/wsdl/" xmlns:s1="http://com/b2w/tools/ws" xmlns:s2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://www.b2winc.com/tools/getproductionitemInfo"/>
+      <xs:import namespace="http://www.b2winc.com/tools/getProductIds"/>
+      <xs:import namespace="http://www.b2winc.com/tools/getartistinfo"/>
+      <xs:element name="getProductIds">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="get:getProductIdsRequest" xmlns:get="http://www.b2winc.com/tools/getProductIds"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getProductIdsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="get:getProductIdsResponse" xmlns:get="http://www.b2winc.com/tools/getProductIds"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getArtistInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="get:getArtistInfoRequest" xmlns:get="http://www.b2winc.com/tools/getartistinfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getArtistInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="get:getArtistInfoResponse" xmlns:get="http://www.b2winc.com/tools/getartistinfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getProductionItemInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="itemId" type="xs:long"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getProductionItemInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="get:getProductionItemInfoResponse" xmlns:get="http://www.b2winc.com/tools/getproductionitemInfo"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="getProductIds">
+    <WL5G3N0:part element="WL5G3N1:getProductIds" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="getProductIdsResponse">
+    <WL5G3N0:part element="WL5G3N1:getProductIdsResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="getArtistInfo">
+    <WL5G3N0:part element="WL5G3N1:getArtistInfo" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="getArtistInfoResponse">
+    <WL5G3N0:part element="WL5G3N1:getArtistInfoResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="getProductionItemInfo">
+    <WL5G3N0:part element="WL5G3N1:getProductionItemInfo" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="getProductionItemInfoResponse">
+    <WL5G3N0:part element="WL5G3N1:getProductionItemInfoResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="ToolsWs">
+    <WL5G3N0:operation name="getProductIds" parameterOrder="parameters">
+      <WL5G3N0:input message="WL5G3N1:getProductIds"/>
+      <WL5G3N0:output message="WL5G3N1:getProductIdsResponse"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="getArtistInfo" parameterOrder="parameters">
+      <WL5G3N0:input message="WL5G3N1:getArtistInfo"/>
+      <WL5G3N0:output message="WL5G3N1:getArtistInfoResponse"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="getProductionItemInfo" parameterOrder="parameters">
+      <WL5G3N0:input message="WL5G3N1:getProductionItemInfo"/>
+      <WL5G3N0:output message="WL5G3N1:getProductionItemInfoResponse"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="ToolsWsServiceSoapBinding" type="WL5G3N1:ToolsWs">
+    <WL5G3N2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="getProductIds">
+      <WL5G3N2:operation style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body parts="parameters" use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body parts="parameters" use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="getArtistInfo">
+      <WL5G3N2:operation style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body parts="parameters" use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body parts="parameters" use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="getProductionItemInfo">
+      <WL5G3N2:operation style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body parts="parameters" use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body parts="parameters" use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="ToolsWsServiceSoapBindingQSService">
+    <WL5G3N0:port binding="WL5G3N1:ToolsWsServiceSoapBinding" name="ToolsWsServiceSoapBindingQSPort">
+      <WL5G3N2:address location="http://bus11g.b2w/ToolsServices/Proxy_Services/getProductionItemInfo?WSDL"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>
